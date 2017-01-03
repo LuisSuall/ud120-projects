@@ -9,12 +9,12 @@
 
     After that, it's not our code anymore--it's yours!
 """
-
+from __future__ import division
 import pickle
 import sys
 from sklearn.cross_validation import train_test_split
 from sklearn.tree import DecisionTreeClassifier
-from sklearn.metrics import accuracy_score
+from sklearn.metrics import accuracy_score, precision_score, recall_score
 sys.path.append("../tools/")
 from feature_format import featureFormat, targetFeatureSplit
 
@@ -37,4 +37,16 @@ pred = clf.predict(features_test)
 
 score = accuracy_score(labels_test, pred)
 
-print "Score:", score
+print "Accuracy score:", score
+
+# Evaluation Metrics mini-project
+poi_predicted = sum(pred)
+print "No of POI predicted:", poi_predicted
+print "No of people on test:", len(labels_test)
+print "Accuracy for \'not POI for everyone\':", 1-sum(labels_test)/len(labels_test)
+
+true_positives = pred * labels_test
+print "No of true positives:", sum(true_positives)
+
+print "Precision score:", precision_score(labels_test, pred)
+print "Recall score:", recall_score(labels_test, pred)
